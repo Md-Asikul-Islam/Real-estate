@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
-
+import authRouter from "./routes/authRoute.js";
 
 dotenv.config();
 const app = express();
@@ -24,7 +24,8 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
+// Routes
+app.use("/api/auth", authRouter);
 
 
 // Start server

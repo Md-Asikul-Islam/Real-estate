@@ -140,7 +140,7 @@ const Footer = () => {
                 {item.href ? (
                   <a
                     href={item.href}
-                    className="hover:text-white transition block break-words"
+                    className="hover:text-white transition block"
                   >
                     {item.value}
                   </a>
