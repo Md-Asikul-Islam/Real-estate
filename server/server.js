@@ -8,6 +8,8 @@ import authRouter from "./routes/authRoute.js";
 import passport from "./config/passport.js";
 import router from "./routes/OauthRoute.js";
 import propertyRouter from "./routes/propertyRoute.js";
+import userRouter from "./routes/userRoute.js";
+
 dotenv.config();
 const app = express();
 
@@ -31,6 +33,7 @@ app.use(passport.initialize());
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/oauth", router);
+app.use("/api/users", userRouter);
 app.use("/api/properties", propertyRouter);
 
 // Error handling middleware
