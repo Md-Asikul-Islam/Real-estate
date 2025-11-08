@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion as Motion } from "framer-motion";
 import Button from "../components/Button";
 import banner from "../assets/banner/banner-1.webp";
+import Loader from "../components/Loader";
 
 // Lazy load heavy PropertyList for faster first paint
 const PropertyList = lazy(() => import("./properties/PropertyList"));
@@ -86,7 +87,7 @@ const Home = memo(() => {
       {/* Lazy Loaded Property List */}
       <Suspense
         fallback={
-          <div className="text-center text-gray-500 py-10">Loading properties...</div>
+          <Loader />
         }
       >
         <Motion.section

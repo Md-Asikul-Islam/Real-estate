@@ -6,9 +6,15 @@
   font-family: "Outfit", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 body{
   background-color: #F1F3F8;
 }
+
 /* theme layer */
 @theme {
   --color-primary: #1F2937;
