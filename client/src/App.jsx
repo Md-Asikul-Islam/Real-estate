@@ -1,14 +1,26 @@
-import React from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import React, { useEffect, useRef } from "react";
+import { useDispatch} from "react-redux";
+import { Toaster } from "react-hot-toast";
+import AnimatedRoutes from "./routes/AnimatedRoutes";
+import { fetchCurrentUser } from "./features/auth/authSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const hasFetched = useRef(false);
+
+  useEffect(() => {
+    if (!hasFetched.current) {
+      hasFetched.current = true;
+      dispatch(fetchCurrentUser());
+    }
+  }, [dispatch]);
+
   return (
     <>
-     <Header />
-     <Footer />
+      <Toaster position="top-right" reverseOrder={false} />
+      <AnimatedRoutes />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
