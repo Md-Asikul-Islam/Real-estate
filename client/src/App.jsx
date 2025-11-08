@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch} from "react-redux";
 import { Toaster } from "react-hot-toast";
-import AnimatedRoutes from "./routes/AnimatedRoutes";
+import AnimatedRoutes from "./routes/AnimatedRoustes";
 import { fetchCurrentUser } from "./features/auth/authSlice";
 
 const App = () => {

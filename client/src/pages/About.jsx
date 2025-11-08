@@ -8,7 +8,7 @@ const CTASection = lazy(() => import("../components/CTASection"));
 const FAQSection = lazy(() => import("../components/FAQSection"))
 const Timeline = lazy(() => import("../components/TimeLine"));
 const TeamSection = lazy(() => import("../components/TeamSection"));
-const Testimonial = lazy(() => import("../components/Testimonial"));
+const Testimonial = lazy(() => import("../components/Testimionial"));
 const About = () => {
   return (
     <section

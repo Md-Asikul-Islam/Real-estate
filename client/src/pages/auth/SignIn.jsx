@@ -8,8 +8,8 @@ import { motion as Motion } from "framer-motion";
 import api from "../../services/api";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
-import googleIcon from "../../assets/google.png";
-import githubIcon from "../../assets/github.png";
+import googleIcon from "../../assets/social/google.png";
+import githubIcon from "../../assets/social/github.png";
 
 // Zod validation schema
 const signInSchema = z.object({

@@ -4,7 +4,8 @@ import { Route, Routes, useLocation,Outlet } from "react-router-dom";
 // Layouts
 import MainLayout from "../layout/MainLayout";
 import AuthLayout from "../layout/AuthLayout";
-import ProtectedRoute from "../layout/ProtectedRoute";
+// import AdminLayout from "../layout/AdminLayout";
+import ProtectedRoute from "../layout/ProtectedLayout";
 
 // Pages
 import Home from "../pages/Home";
@@ -23,7 +24,7 @@ import Profile from "../pages/Profile";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
 import ForgotPassword from "../pages/auth/ForgotPassword";
-import ResetPassword from "../pages/auth/ResetPassword ";
+import ResetPassword from "../pages/auth/ResetPassword";
 import VerifyEmail from "../pages/auth/VerifyEmail";
 import VerifyOtp from "../pages/auth/VerifyOtp";
 
@@ -32,7 +33,7 @@ import PageWrapper from "../components/PageWrapper";
 import NotFound from "../pages/NotFound";
 import MyProperties from './../pages/properties/MyProperties';
 import PropertyDetails from "../pages/properties/PropertyDetails";
-import AdminLayout from "../layout/AdminLayout";
+
 
 
 
@@ -78,9 +79,9 @@ const AnimatedRoutes = () => {
          <Route path="my-properties" element={<PageWrapper><MyProperties/></PageWrapper>} />
         </Route>
 
-        <Route element={<AdminLayout />}>
+        {/* <Route element={<AdminLayout />}>
            
-        </Route>
+        </Route> */}
 
         {/* ===== Catch-all Route ===== */}
         <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />

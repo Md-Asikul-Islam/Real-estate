@@ -7,8 +7,8 @@ import api from "../../services/api";
 import InputField from "../../components/InputField";
 import ImageUploader from "../../components/ImageUploader";
 import Button from "../../components/Button";
-import { uploadCloudinary } from "../../utils/uploadCloudinary";
-import { convertToWebp } from "../../utils/covertToWebp";
+import { convertToWebp } from "../../utils/convertToWebp";
+import { uploadCloudinary } from "../../utils/uplaodCloudinary";
 
 /* ---------------- Validation Schema ---------------- */
 const propertySchema = z.object({

@@ -8,7 +8,7 @@ import api from "../../services/api";
 import InputField from "../../components/InputField";
 import ImageUploader from "../../components/ImageUploader";
 import Button from "../../components/Button";
-import { uploadCloudinary } from "../../utils/uploadCloudinary";
+import { uploadCloudinary } from "../../utils/uplaodCloudinary";
 
 // ✅ Zod schema
 const propertySchema = z.object({
