@@ -42,7 +42,7 @@ const PropertyDetails = ({ property, onClose, isOwnerView }) => {
               key={idx}
               src={img.url}
               alt={`${title} ${idx}`}
-              className="h-48 w-auto rounded-lg flex-shrink-0 object-cover"
+              className="h-48 w-auto rounded-lg shrink-0 object-cover"
             />
           ))
         ) : (

@@ -65,7 +65,7 @@ const Home = memo(() => {
 
         {/* Right Banner Image */}
         <Motion.div
-          className="flex-1 relative w-full  md:w-auto h-[270px] md:h-[384px] rounded-xl overflow-hidden shadow-lg"
+          className="flex-1 relative w-full  md:w-auto h-[270px] md:h-96 rounded-xl overflow-hidden shadow-lg"
           variants={fadeInRight}
           initial="hidden"
           whileInView="visible"
@@ -79,7 +79,7 @@ const Home = memo(() => {
             decoding="async"
           />
           {/* Optional gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-linear-to-tr from-black/10 to-transparent pointer-events-none"></div>
         </Motion.div>
       </section>
 

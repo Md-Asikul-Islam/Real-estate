@@ -14,7 +14,7 @@ const PropertyFilter = ({ filters, actions }) => {
           onChange={(e) => actions.updateParams("q", e.target.value)}
           className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400"
         />
-        <IoIosSearch className="text-gray-500 text-xl ml-2 flex-shrink-0" />
+        <IoIosSearch className="text-gray-500 text-xl ml-2 shrink-0" />
       </div>
 
       {/* Sort Dropdown */}

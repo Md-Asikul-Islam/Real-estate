@@ -33,7 +33,7 @@ const FeatureGrid = () => {
             cursor-pointer
             backdrop-blur-xl
             border border-white/20 dark:border-gray-700/30
-            bg-gradient-to-br from-white/20 to-white/10 dark:from-gray-900/30 dark:to-gray-800/20
+            bg-linear-to-br from-white/20 to-white/10 dark:from-gray-900/30 dark:to-gray-800/20
             shadow-lg dark:shadow-black/20
             hover:shadow-2xl hover:scale-[1.03]
             transition-all duration-500
@@ -51,7 +51,7 @@ const FeatureGrid = () => {
             {feature.desc}
           </p>
           {/* Optional: subtle decorative gradient overlay */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/5 to-white/0 dark:from-gray-800/20 dark:to-gray-900/10 pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white/5 to-white/0 dark:from-gray-800/20 dark:to-gray-900/10 pointer-events-none"></div>
         </Motion.div>
       ))}
     </div>
