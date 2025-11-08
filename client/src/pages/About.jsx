@@ -3,12 +3,12 @@ import { motion as Motion } from "framer-motion";
 import Loader from "../components/Loader";
 
 // Lazy load feature and CTA sections
-const FeatureGrid = lazy(() => import("../components/FeatureGrid"));
-const CTASection = lazy(() => import("../components/CTASection"));
-const FAQSection = lazy(() => import("../components/FAQSection"))
-const Timeline = lazy(() => import("../components/TimeLine"));
-const TeamSection = lazy(() => import("../components/TeamSection"));
-const Testimonial = lazy(() => import("../components/Testimionial"));
+const FeatureGrid = lazy(() => import("../components/about/FeatureGrid"));
+const CTASection = lazy(() => import("../components/about/CTASection"));
+const FAQSection = lazy(() => import("../components/about/FAQSection"));
+const Timeline = lazy(() => import("../components/about/Timeline"));
+const TeamSection = lazy(() => import("../components/about/TeamSection"));
+const Testimonial = lazy(() => import("../components/about/Testimionial"));
 const About = () => {
   return (
     <section
@@ -34,32 +34,19 @@ const About = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          BTI Real Estate is dedicated to helping clients find their dream homes and investment properties effortlessly.
-          We specialize in residential, commercial, and rental properties, providing expert guidance and personalized services.
+          BTI Real Estate is dedicated to helping clients find their dream homes
+          and investment properties effortlessly. We specialize in residential,
+          commercial, and rental properties, providing expert guidance and
+          personalized services.
         </Motion.p>
 
         {/* Lazy Load Inner Sections */}
         <Suspense fallback={<Loader />}>
           <FeatureGrid />
-        </Suspense>
-
-        <Suspense fallback={<Loader />}>
           <Timeline />
-        </Suspense>
-
-        <Suspense fallback={<Loader />}>
           <TeamSection />
-        </Suspense>
-
-        <Suspense fallback={<Loader />}>
           <Testimonial />
-        </Suspense>
-
-        <Suspense fallback={<Loader />}>
           <FAQSection />
-        </Suspense>
-
-        <Suspense fallback={<Loader />}>
           <CTASection />
         </Suspense>
       </div>
