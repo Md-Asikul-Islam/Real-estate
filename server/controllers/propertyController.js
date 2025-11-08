@@ -1,4 +1,4 @@
-import Property from "../models/property.js";
+import Property from "../models/propertyModel.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import AppError from "../utils/AppError.js";
 import { destroyCloudinaryImage } from "../config/cloudinary.js";
