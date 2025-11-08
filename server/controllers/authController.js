@@ -398,5 +398,12 @@ const resetPassword = asyncHandler(async (req, res, next) => {
 
 export {
   SignUp,
-
+  VerifyEmail,
+  SignIn,
+  getMe,
+  RefreshToken,
+  SignOut,
+  forgotPassword,
+  verifyOTP,
+  resetPassword,
 };
