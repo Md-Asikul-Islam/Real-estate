@@ -1,6 +1,6 @@
 // controllers/adminController.js
 import User from "../models/userModel.js";
-import Property from "../models/property.js";
+import Property from "../models/propertyModel.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import AppError from "../utils/AppError.js";
 
