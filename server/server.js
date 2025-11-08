@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
+import errorHandler from "./middlewares/errorMiddleware.js";
 import authRouter from "./routes/authRoute.js";
-
+import passport from "./config/passport.js";
+import router from "./routes/OauthRoute.js";
 dotenv.config();
 const app = express();
 
@@ -23,11 +25,15 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 // Routes
 app.use("/api/auth", authRouter);
+app.use("/api/oauth", router);
 
 
+// Error handling middleware
+app.use(errorHandler);
 // Start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
