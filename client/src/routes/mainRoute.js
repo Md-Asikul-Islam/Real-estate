@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import PageWrapper from "../components/PageWrapper";
-import PageSkeleton from "../components/PageSkeleton";
+import PageSkeleton from "../components/animation/PageSkeleton";
 // Main Pages
 const Home = lazy(() => import("../pages/Home"));
 const About = lazy(() => import("../pages/About"));
