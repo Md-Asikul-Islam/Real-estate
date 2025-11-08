@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FiMenu, FiX, FiShoppingCart, FiUser } from "react-icons/fi";
@@ -8,31 +7,22 @@ import { signOut } from "../features/auth/authSlice";
 import Button from "./Button";
 import logo from "../assets/logo.jpg";
 
-
-
-
-
-// Reusable Auth Button
-const AuthButton = ({ isAuthenticated, loading, onSignIn, onSignOut }) => {
-  if (loading) return <Button>Loading...</Button>;
-
-  return isAuthenticated ? (
-    <Button variant="danger" onClick={onSignOut}>
-      Sign Out
-    </Button>
-  ) : (
-    <Button variant="primary" onClick={onSignIn}>
-      Sign In
-    </Button>
-  );
-};
+const navItems = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contact" },
+  { name: "Buy", path: "/properties/buy" },
+  { name: "Rent", path: "/properties/rent" },
+  { name: "Sale", path: "/properties/sale" },
+  { name: "All", path: "/properties" },
+];
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart || { cartItems: [] });
 
@@ -41,6 +31,24 @@ const Header = () => {
     dispatch(signOut());
     navigate("/");
     setProfileOpen(false);
+  };
+
+  const getLinkClass = ({ isActive }) =>
+    `block hover:text-blue-500 transition-colors duration-300 ${
+      isActive ? "text-blue-600 font-semibold" : "text-gray-800"
+    }`;
+
+  const AuthButton = () => {
+    if (loading) return <Button>Loading...</Button>;
+    return isAuthenticated ? (
+      <Button variant="danger" onClick={handleSignOut}>
+        Sign Out
+      </Button>
+    ) : (
+      <Button variant="primary" onClick={handleSignIn}>
+        Sign In
+      </Button>
+    );
   };
 
   return (
@@ -58,20 +66,32 @@ const Header = () => {
           </span>
         </NavLink>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Nav */}
         <ul className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
-            <li key={item.name} className="list-none transform transition-transform duration-200 hover:scale-105">
-              <NavLinkItem item={item} />
+            <li
+              key={item.name}
+              className="list-none transform transition-transform duration-200 hover:scale-105 will-change-transform"
+            >
+              <NavLink
+                to={item.path}
+                className={getLinkClass}
+                end={item.path === "/properties"}
+              >
+                {item.name}
+              </NavLink>
             </li>
           ))}
         </ul>
 
-        {/* Right Section (Desktop) */}
+        {/* Right Section */}
         <div className="hidden md:flex items-center gap-5 relative">
           {/* Cart */}
           <NavLink to="/cart" className="relative group">
-            <FiShoppingCart size={22} className="text-gray-800 hover:text-blue-500 transition-colors" />
+            <FiShoppingCart
+              size={22}
+              className="text-gray-800 hover:text-blue-500 transition-colors"
+            />
             {cartItems?.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5">
                 {cartItems.length}
@@ -79,7 +99,7 @@ const Header = () => {
             )}
           </NavLink>
 
-          {/* Profile Dropdown */}
+          {/* Profile */}
           {isAuthenticated ? (
             <div className="relative">
               <button
@@ -89,6 +109,7 @@ const Header = () => {
                 <FiUser className="text-gray-700" />
               </button>
 
+              {/* Profile dropdown */}
               <AnimatePresence>
                 {profileOpen && (
                   <Motion.div
@@ -97,20 +118,34 @@ const Header = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2 z-50"
+                    className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50"
                   >
-                    <ProfileMenu onClose={() => setProfileOpen(false)} />
+                    <NavLink
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                      onClick={() => setProfileOpen(false)}
+                    >
+                      My Profile
+                    </NavLink>
+                    <NavLink
+                      to="/my-properties"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                      onClick={() => setProfileOpen(false)}
+                    >
+                      My Properties
+                    </NavLink>
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50"
+                    >
+                      Sign Out
+                    </button>
                   </Motion.div>
                 )}
               </AnimatePresence>
             </div>
           ) : (
-            <AuthButton
-              isAuthenticated={isAuthenticated}
-              loading={loading}
-              onSignIn={handleSignIn}
-              onSignOut={handleSignOut}
-            />
+            <AuthButton />
           )}
         </div>
 
@@ -119,6 +154,7 @@ const Header = () => {
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             className="text-gray-800 hover:text-blue-500 transition-colors duration-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            aria-label="Toggle menu"
           >
             {menuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
           </button>
@@ -138,7 +174,15 @@ const Header = () => {
           >
             <ul className="flex flex-col space-y-4 p-5">
               {navItems.map((item) => (
-                <NavLinkItem key={item.name} item={item} onClick={() => setMenuOpen(false)} />
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  className={getLinkClass}
+                  onClick={() => setMenuOpen(false)}
+                  end={item.path === "/properties"}
+                >
+                  {item.name}
+                </NavLink>
               ))}
 
               {/* Cart */}
@@ -155,9 +199,33 @@ const Header = () => {
                 )}
               </NavLink>
 
-              {/* Auth / Profile */}
+              {/* Profile/Auth */}
               {isAuthenticated ? (
-                <ProfileMenu onClose={() => setMenuOpen(false)} />
+                <>
+                  <NavLink
+                    to="/profile"
+                    className="text-gray-800 hover:text-blue-500"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Profile
+                  </NavLink>
+                  <NavLink
+                    to="/my-properties"
+                    className="text-gray-800 hover:text-blue-500"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    My Properties
+                  </NavLink>
+                  <button
+                    onClick={() => {
+                      handleSignOut();
+                      setMenuOpen(false);
+                    }}
+                    className="text-red-500 text-left hover:text-red-600"
+                  >
+                    Sign Out
+                  </button>
+                </>
               ) : (
                 <NavLink
                   to="/sign-in"
