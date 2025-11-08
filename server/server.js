@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/errorMiddleware.js";
 import authRouter from "./routes/authRoute.js";
 import passport from "./config/passport.js";
 import router from "./routes/OauthRoute.js";
+import propertyRouter from "./routes/propertyRoute.js";
 dotenv.config();
 const app = express();
 
@@ -30,7 +31,7 @@ app.use(passport.initialize());
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/oauth", router);
-
+app.use("/api/properties", propertyRouter);
 
 // Error handling middleware
 app.use(errorHandler);
