@@ -7,13 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../features/auth/authSlice";
 import Button from "./Button";
 import logo from "../assets/logo.jpg";
-import 
 
 
-// Reusable NavLink component
 
-
-// Reusable Profile dropdown
 
 
 // Reusable Auth Button
