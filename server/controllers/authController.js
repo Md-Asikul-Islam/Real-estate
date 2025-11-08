@@ -8,7 +8,7 @@ import {
   generateRefreshToken,
   COOKIE_OPTIONS,
 } from "../utils/token.js";
-import sendEmail from "../utils/sendEmail.js";
+import sendEmail from "../utils/sendMail.js";
 
 /*
   @desc    SignUp a new user
