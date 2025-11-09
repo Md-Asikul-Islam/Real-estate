@@ -41,16 +41,25 @@ const PropertySchema = new Schema(
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
     isPublished: { type: Boolean, default: true },
     slug: { type: String, index: true },
+     imagesToDelete: [{ type: String }],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 
 
 /* ----------------------------- Index ----------------------------- */
-PropertySchema.index({ title: "text", description: "text", "address.city": "text" });
+PropertySchema.index({
+  title: "text",
+  description: "text",
+  "address.city": "text",
+  "address.block": "text",
+  "address.roadNo": "text",
+});
 PropertySchema.index({ price: 1 });
 PropertySchema.index({ saleType: 1 });
+PropertySchema.index({ bedrooms: 1 });
+PropertySchema.index({ createdAt: -1 });
 
 /* ----------------------------- Slug Generator ----------------------------- */
 PropertySchema.pre("save", function (next) {
@@ -64,14 +73,26 @@ PropertySchema.pre("save", function (next) {
 });
 // ‍  adding image after upload the cloudinary
 PropertySchema.methods.addImages = async function (inputImages = []) {
+  if (!Array.isArray(inputImages) || inputImages.length === 0) return; // skip if empty
+
   const formatted = inputImages.map((item) => {
-    if (typeof item === "string") return { url: item, key: null, alt: "Property image" };
-    return { url: item.url, key: item.public_id || null, alt: item.alt || "Property image" };
+    if (typeof item === "string") {
+      // simple URL string
+      return { url: item, public_id: null, key: null, alt: "Property image" };
+    }
+
+    return {
+      url: item.url,
+      public_id: item.public_id || null,   // use Cloudinary public_id if available
+      key: item.key || item.public_id || null,
+      alt: item.alt || "Property image",
+    };
   });
 
   this.images.push(...formatted);
   await this.save();
 };
+
 
 /* ----------------------------- Virtual Field ----------------------------- */
 PropertySchema.virtual("pricePerSqft").get(function () {

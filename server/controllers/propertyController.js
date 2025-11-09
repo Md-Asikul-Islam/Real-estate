@@ -205,91 +205,67 @@ const deleteProperty = asyncHandler(async (req, res, next) => {
   @route   GET /api/properties
   @access  Public
 */
-const getAllProperties = asyncHandler(async (req, res) => {
-  const {
-    search = "",
-    minPrice,
-    maxPrice,
-    bedrooms,
-    sort,
-    page = 1,
-    limit = 10,
-    saleType,
-  } = req.query;
 
-  const query = { isPublished: true };
-  const validSaleTypes = ["rent", "buy", "sale"];
+const getAllProperties = async (req, res) => {
+  try {
+    const { search = "", minPrice, maxPrice, bedrooms, sort = "", page = 1, limit = 10, saleType = "" } = req.query;
 
-  // 🔹 Filter by saleType
-  if (saleType && validSaleTypes.includes(saleType)) {
-    query.saleType = saleType;
+    const numericPage = Math.max(Number(page), 1);
+    const safeLimit = Math.min(Number(limit) || 10, 100);
+    const skip = (numericPage - 1) * safeLimit;
+
+    const query = { isPublished: true };
+
+    if (saleType) query.saleType = saleType;
+    if (bedrooms) query.bedrooms = Number(bedrooms);
+    if (minPrice || maxPrice) {
+      query.price = {
+        ...(minPrice ? { $gte: Number(minPrice) } : {}),
+        ...(maxPrice ? { $lte: Number(maxPrice) } : {}),
+      };
+    }
+
+    if (search.trim()) {
+      const regex = new RegExp(search.trim(), "i");
+      query.$or = [
+        { title: regex },
+        { description: regex },
+        { "address.city": regex },
+        { "address.block": regex },
+        { "address.roadNo": regex },
+        { saleType: regex },
+      ];
+    }
+
+    let sortBy = { createdAt: -1 };
+    if (sort === "priceAsc") sortBy = { price: 1 };
+    else if (sort === "priceDesc") sortBy = { price: -1 };
+
+    const total = await Property.countDocuments(query);
+
+    const properties = await Property.aggregate([
+      { $match: query },
+      { $sort: sortBy },
+      { $skip: skip },
+      { $limit: safeLimit },
+      { $lookup: { from: "users", localField: "owner", foreignField: "_id", as: "owner" } },
+      { $unwind: "$owner" },
+      { $project: { __v: 0, "owner.password": 0 } },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      meta: { total, count: properties.length, page: numericPage, totalPages: Math.ceil(total / safeLimit) },
+      properties,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server Error", error: error.message });
   }
+};
 
-  // 🔹 Text search
-  if (search.trim()) {
-    query.$text = { $search: search };
-  }
 
-  // 🔹 Bedrooms filter
-  if (bedrooms && !isNaN(bedrooms)) {
-    query.bedrooms = { $gte: Number(bedrooms) };
-  }
 
-  // 🔹 Price filter
-  if ((minPrice && !isNaN(minPrice)) || (maxPrice && !isNaN(maxPrice))) {
-    query.price = {};
-    if (minPrice) query.price.$gte = Number(minPrice);
-    if (maxPrice) query.price.$lte = Number(maxPrice);
-  }
-
-  // 🔹 Pagination
-  const safePage = Math.max(1, Number(page));
-  const safeLimit = Math.min(50, Number(limit));
-  const skip = (safePage - 1) * safeLimit;
-
-  // 🔹 Sorting
-  const sortBy =
-    sort === "priceAsc"
-      ? { price: 1 }
-      : sort === "priceDesc"
-      ? { price: -1 }
-      : { createdAt: -1 };
-
-  // 🔹 Aggregation pipeline
-  const pipeline = [
-    { $match: query },
-    { $sort: sortBy },
-    { $skip: skip },
-    { $limit: safeLimit },
-    {
-      $lookup: {
-        from: "users",
-        localField: "owner",
-        foreignField: "_id",
-        as: "owner",
-      },
-    },
-    { $unwind: "$owner" },
-    { $project: { __v: 0, "owner._id": 0, "owner.password": 0 } },
-  ];
-
-  // 🔹 Execute data + total count in parallel
-  const [data, totalCount] = await Promise.all([
-    Property.aggregate(pipeline),
-    Property.countDocuments(query),
-  ]);
-
-  res.status(200).json({
-    success: true,
-    meta: {
-      total: totalCount,
-      count: data.length,
-      page: safePage,
-      totalPages: Math.ceil(totalCount / safeLimit),
-    },
-    data,
-  });
-});
 
 
 /*

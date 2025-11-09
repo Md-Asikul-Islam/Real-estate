@@ -10,8 +10,8 @@ const PropertyFilter = ({ filters, actions }) => {
         <input
           type="text"
           placeholder="Search by title, city, or sale type..."
-          value={filters.query}
-          onChange={(e) => actions.updateParams("q", e.target.value)}
+          value={filters.search}
+          onChange={(e) => actions.updateParams("search", e.target.value)}
           className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-400"
         />
         <IoIosSearch className="text-gray-500 text-xl ml-2 shrink-0" />

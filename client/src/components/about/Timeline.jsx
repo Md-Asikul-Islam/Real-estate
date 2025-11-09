@@ -43,32 +43,61 @@ const Timeline = () => {
           Our Journey
         </h2>
 
+        {/* Timeline Container */}
         <div className="relative max-w-5xl mx-auto">
-          {/* Vertical Line */}
-          <div className="absolute left-1/2 top-0 h-full w-1 bg-linear-to-b from-blue-400 via-purple-400 to-pink-400 transform -translate-x-1/2 rounded-full"></div>
 
+          {/* Vertical Line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-linear-to-b from-blue-400 via-purple-400 to-pink-400 transform -translate-x-1/2 z-0"></div>
+
+          {/* Timeline Items */}
           {milestones.map((m, i) => (
             <Motion.div
               key={m.year}
-              className="relative mb-16 w-full flex flex-col sm:flex-row justify-center items-center"
-              initial={{ opacity: 0, y: 50 }}
+              className={`relative flex flex-col sm:flex-row items-center mb-16 z-10`}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: i * 0.15, duration: 0.6, ease: "easeOut" }}
+              transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
             >
-              {/* Icon */}
-              <div className="absolute sm:relative top-0 left-1/2 transform -translate-x-1/2 sm:translate-x-0 mb-4 sm:mb-0 z-10">
-                <div className="bg-white border-2 border-blue-400 rounded-full w-10 h-10 flex items-center justify-center shadow-md">
-                  {m.icon}
-                </div>
+              {/* Left Card */}
+              <div
+                className={`hidden sm:flex w-1/2 justify-${i % 2 === 0 ? "end" : "start"} px-4`}
+              >
+                {i % 2 === 0 && (
+                  <div className="bg-white border border-gray-200 shadow-md rounded-2xl p-6 w-80">
+                    <h3 className="text-blue-600 font-semibold text-lg">
+                      {m.year} — {m.title}
+                    </h3>
+                    <p className="text-gray-600 mt-2 text-sm leading-relaxed">
+                      {m.description}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Timeline Card */}
+              {/* Icon (Always centered on the line) */}
+              <div className="flex items-center justify-center bg-white border-2 border-blue-400 rounded-full w-12 h-12 shadow-md z-10">
+                {m.icon}
+              </div>
+
+              {/* Right Card */}
               <div
-                className={`relative bg-white border border-gray-200 shadow-md rounded-2xl p-6 sm:w-80 md:w-96 mt-6 sm:mt-0
-                  ${i % 2 === 0 ? "sm:ml-12 sm:mr-auto" : "sm:mr-12 sm:ml-auto"}
-                `}
+                className={`hidden sm:flex w-1/2 justify-${i % 2 === 0 ? "start" : "end"} px-4`}
               >
+                {i % 2 !== 0 && (
+                  <div className="bg-white border border-gray-200 shadow-md rounded-2xl p-6 w-80">
+                    <h3 className="text-blue-600 font-semibold text-lg">
+                      {m.year} — {m.title}
+                    </h3>
+                    <p className="text-gray-600 mt-2 text-sm leading-relaxed">
+                      {m.description}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile Layout */}
+              <div className="sm:hidden mt-6 text-center bg-white border border-gray-200 shadow-md rounded-2xl p-6 w-full">
                 <h3 className="text-blue-600 font-semibold text-lg">
                   {m.year} — {m.title}
                 </h3>
@@ -85,4 +114,3 @@ const Timeline = () => {
 };
 
 export default React.memo(Timeline);
-
