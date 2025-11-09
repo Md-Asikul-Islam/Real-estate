@@ -6,7 +6,7 @@ const featureVariants = {
   visible: (i = 1) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: "easeOut" },
+    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" },
   }),
 };
 
@@ -25,23 +25,10 @@ const FeatureGrid = () => {
       {features.map((feature, i) => (
         <Motion.div
           key={feature.title}
-          className="
-            relative
-            rounded-3xl
-            p-6 sm:p-8 lg:p-10
-            text-center
-            cursor-pointer
-            backdrop-blur-xl
-            border border-white/20 dark:border-gray-700/30
-            bg-linear-to-br from-white/20 to-white/10 dark:from-gray-900/30 dark:to-gray-800/20
-            shadow-lg dark:shadow-black/20
-            hover:shadow-2xl hover:scale-[1.03]
-            transition-all duration-500
-          "
+          className="bg-[#F8FBFF] relative rounded-3xl p-6 sm:p-8 lg:p-10 text-center cursor-pointer backdrop-blur-xl border border-white/20 dark:border-gray-700/30 bg-linear-to-br from-white/20 to-white/10 dark:from-gray-900/30 dark:to-gray-800/20 shadow-lg dark:shadow-black/20 hover:shadow-2xl hover:scale-[1.03] transition-all duration-500"
           custom={i}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"           
           variants={featureVariants}
         >
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 text-blue-600 dark:text-blue-400">
@@ -50,7 +37,6 @@ const FeatureGrid = () => {
           <p className="text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-base leading-relaxed">
             {feature.desc}
           </p>
-          {/* Optional: subtle decorative gradient overlay */}
           <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-white/5 to-white/0 dark:from-gray-800/20 dark:to-gray-900/10 pointer-events-none"></div>
         </Motion.div>
       ))}

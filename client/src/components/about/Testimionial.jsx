@@ -10,17 +10,17 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-3xl sm:text-4xl font-bold text-center mb-12">
           What Our Clients Say
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <Motion.div
               key={i}
-              className="bg-gray-50 shadow-lg rounded-xl p-6"
+              className="bg-white shadow-lg rounded-xl p-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

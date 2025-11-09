@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, memo } from "react";
+import React, { lazy, Suspense, memo,  } from "react";
 import { motion as Motion } from "framer-motion";
 import Loader from "../components/Loader";
 
@@ -10,6 +10,7 @@ const Timeline = lazy(() => import("../components/about/Timeline"));
 const TeamSection = lazy(() => import("../components/about/TeamSection"));
 const Testimonial = lazy(() => import("../components/about/Testimionial"));
 const About = () => {
+
   return (
     <section
       className="bg-gray-50 py-12 sm:py-16 lg:py-20"

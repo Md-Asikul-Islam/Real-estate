@@ -1,11 +1,39 @@
 // src/components/TeamSection.jsx
 import React from "react";
+import { motion as Motion } from "framer-motion";
 
+//  Static assets (fast caching handled by Vite/Webpack)
+import ceo from "../../assets/employee/ceo.webp";
+import coo from "../../assets/employee/coo.webp";
+import sales from "../../assets/employee/manager.webp";
+import marketing from "../../assets/employee/maeketing.webp";
+
+// 🧩 Data with short quotes
 const teamMembers = [
-  { name: "John Doe", role: "CEO", photo: "/assets/team/john.jpg" },
-  { name: "Jane Smith", role: "COO", photo: "/assets/team/jane.jpg" },
-  { name: "Mike Johnson", role: "Head of Sales", photo: "/assets/team/mike.jpg" },
-  { name: "Sara Wilson", role: "Marketing Lead", photo: "/assets/team/sara.jpg" },
+  {
+    name: "MR Habibur Rahman",
+    role: "Chief Executive Officer (CEO)",
+    photo: ceo,
+    quote: "Leading with vision and purpose to shape a better future.",
+  },
+  {
+    name: "Muhib Al Choudhury",
+    role: "Chief Operating Officer (COO)",
+    photo: coo,
+    quote: "Turning strategy into seamless execution every day.",
+  },
+  {
+    name: "Navid Hassan",
+    role: "Head of Sales",
+    photo: sales,
+    quote: "Building trust and driving growth through relationships.",
+  },
+  {
+    name: "Sara Wilson",
+    role: "Marketing Lead",
+    photo: marketing,
+    quote: "Crafting stories that connect hearts and inspire action.",
+  },
 ];
 
 const TeamSection = () => {
@@ -17,19 +45,31 @@ const TeamSection = () => {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {teamMembers.map((member) => (
-            <div
+          {teamMembers.map((member, index) => (
+            <Motion.div
               key={member.name}
-              className="bg-white shadow-lg rounded-xl p-6 text-center hover:scale-105 transition-transform duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+              whileHover={{ scale: 1.05 }}
+              className="bg-white shadow-md rounded-2xl p-6 text-center hover:shadow-xl transition-transform duration-300"
             >
               <img
                 src={member.photo}
                 alt={member.name}
-                className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                loading="lazy"
+                decoding="async"
+                className="w-24 h-24 sm:w-28 sm:h-28 rounded-full mx-auto mb-4 object-cover"
               />
-              <h3 className="font-semibold text-lg">{member.name}</h3>
-              <p className="text-gray-500">{member.role}</p>
-            </div>
+              <h3 className="font-semibold text-lg sm:text-xl text-gray-800">
+                {member.name}
+              </h3>
+              <p className="text-gray-500 mb-2">{member.role}</p>
+              <p className="text-sm py-4 text-gray-400 italic">
+                “{member.quote}”
+              </p>
+            </Motion.div>
           ))}
         </div>
       </div>
